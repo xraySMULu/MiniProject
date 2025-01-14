@@ -24,24 +24,19 @@ We explored China Pollution data, cleaned the data in preprocessing steps and cr
 * To depict the analysis we used Mean Squared, R-squared & Adjusted R-squared calculations. Below is a sample of the result.
 
 **Beijing Metrics**
-![image](Resources/beij.png)
-Beijing Metrics
+* ![image](Resources/beij.png)
 
 **Beijing NE Metrics**
-![image](Resources/beij_ne.png)
-Beijing NE Metrics
+* ![image](Resources/beij_ne.png)
 
 **Beijing NW Metrics**
-![image](Resources/beij_nw.png)
-Beijing NW Metrics
+* ![image](Resources/beij_nw.png)
 
 **Beijing SE Metrics**
-![image](Resources/beij_se.png)
-Beijing SE Metrics
+* ![image](Resources/beij_se.png)
 
 **Beijing CV Metrics**
-![image](Resources/beij_cv.png)
-Beijing CV Metrics
+* ![image](Resources/beij_cv.png)
 
 ## Documentation
 https://pandas.pydata.org/docs/reference/frame.html
