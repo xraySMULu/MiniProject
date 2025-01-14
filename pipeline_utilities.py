@@ -4,26 +4,20 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
-def preprocess_chine_data(china_df):
+def preprocess_china_data(china_df):
     """
-    Written for rent data; will drop null values and
+    Written for china data; will drop null values and
     split into training and testing sets. Uses price
     as the target column.
     """
-    raw_num_df_rows = len(china_df)
-    #china_df = china_df.dropna()
-    #remaining_num_df_rows = len(china_df)
-    #percent_na = (
-    #    (raw_num_df_rows - remaining_num_df_rows) / raw_num_df_rows * 100
-    #)
-    #print(f"{round(percent_na,2)}% of missing values.")
     china_df['pm2.5'] = china_df['pm2.5'].fillna(china_df['pm2.5'].mean())
-    X = china_df.drop(columns=['pm2.5'])
+    china_df = china_df.dropna()
+    X = pd.get_dummies(china_df.drop(columns='pm2.5'))
     y = china_df['pm2.5'].values.reshape(-1, 1)
-    return train_test_split(X, y)
+    return train_test_split(X, y)   
 def preprocess_china_data_keep_na(china_df):
     """
-    Written for rent data; will split into training
+    Written for china data; will split into training
     and testing sets. Uses price as the target column.
     """
     X = china_df.drop(columns='pm2.5')
@@ -41,44 +35,43 @@ def check_metrics(X_test, y_test, model):
     # Use the pipeline to make predictions
     y_pred = model.predict(X_test)
     # Print out the MSE, r-squared, and adjusted r-squared values
-    print(f"Mean Squared Error: {mean_squared_error(y_test, y_pred)}")
-    print(f"R-squared: {r2_score(y_test, y_pred)}")
-    print(f"Adjusted R-squared: {r2_adj(X_test, y_test, model)}")
-    print("----------")
+    print(f"--> Mean Squared Error: {mean_squared_error(y_test, y_pred)}")
+    print(f"--> R-squared: {r2_score(y_test, y_pred)}")
+    print(f"--> Adjusted R-squared: {r2_adj(X_test, y_test, model)}")    
     return r2_adj(X_test, y_test, model)
 def get_best_pipeline(pipeline, pipeline2, china_df):
     """
-    Accepts two pipelines and rent data.
+    Accepts two pipelines and china data.
     Uses two different preprocessing functions to
     split the data for training the different
     pipelines, then evaluates which pipeline performs
     best.
     """
-    # Apply the preprocess_rent_data step
-    X_train, X_test, y_train, y_test = preprocess_chine_data(china_df)
+    # Apply the preprocess_china_data step
+    X_train, X_test, y_train, y_test = preprocess_china_data(china_df)
     # Fit the first pipeline
     pipeline.fit(X_train, y_train)
-    print("Testing dropped NAs")  
+    print("** Testing dropped NAs")  
     # Print out the MSE, r-squared, and adjusted r-squared values
     # and collect the adjusted r-squared for the first pipeline
     p1_adj_r2 = check_metrics(X_test, y_test, pipeline)
-    # Apply the preprocess_rent_data_keep_na step
+    # Apply the preprocess_china_data_keep_na step
     X_train, X_test, y_train, y_test = preprocess_china_data_keep_na(china_df)
     # Fit the second pipeline
     pipeline2.fit(X_train, y_train)
-    print("Testing no dropped data")
+    print("** Testing no dropped data")
     # Print out the MSE, r-squared, and adjusted r-squared values
     # and collect the adjusted r-squared for the second pipeline
     p2_adj_r2 = check_metrics(X_test, y_test, pipeline2)
     # Compare the adjusted r-squared for each pipeline and
     # return the best model
     if p2_adj_r2 > p1_adj_r2:
-        print("Returning no dropped data pipeline")      
+        print("** Returning no dropped data pipeline")      
         return pipeline2
     else:
-        print("Returning dropped NAs pipeline")       
+        print("** Returning dropped NAs pipeline")       
         return pipeline
-def china_model_generator(china_df):
+def china_model_generator(china_df, dynamic_name):
     """
     Defines a series of steps that will preprocess data,
     split data, and train a model for predicting rent prices
@@ -96,6 +89,9 @@ def china_model_generator(china_df):
     # Create a second pipeline object
     pipeline2 = Pipeline(steps)
     # Get the best pipeline
+    print("----------")
+    print("* " + dynamic_name + " *")
+    print("----------")
     pipeline = get_best_pipeline(pipeline, pipeline2, china_df)
     # Return the trained model
     return pipeline
