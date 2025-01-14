@@ -5,11 +5,7 @@
 
 ## Introduction
 
-You will work in small groups to explore some datasets, then use your knowledge of preprocessing and model selection to create an application that incorporates a machine learning pipeline.
-
-## What Regression Mini-Project does
-
-In this mini project, we used preprocessing and model selection to create an application that incorporates a machine learning pipeline.
+We explored China Pollution data, cleaned the data in preprocessing steps and created an application that incorporates a machine learning pipeline.
 
 ## Files
 
@@ -25,11 +21,27 @@ In this mini project, we used preprocessing and model selection to create an app
 | Resources/beijing-pm2-5-cv.csv | Data sourcep |
 
 ## Visuals and Explanations
-* To depict the analysis we used line graphs, scatter plots and heatmaps. Below is a sample of each as well as the location of the code.
+* To depict the analysis we used Mean Squared, R-squared & Adjusted R-squared calculations. Below is a sample of the result.
 
-**Base Dataframe Plot**
-![image](Resources/lp11.png)
-Line Graph
+**Beijing Metrics**
+![image](Resources/beij.png)
+Beijing Metrics
+
+**Beijing NE Metrics**
+![image](Resources/beij_ne.png)
+Beijing NE Metrics
+
+**Beijing NW Metrics**
+![image](Resources/beij_nw.png)
+Beijing NW Metrics
+
+**Beijing SE Metrics**
+![image](Resources/beij_se.png)
+Beijing SE Metrics
+
+**Beijing CV Metrics**
+![image](Resources/beij_cv.png)
+Beijing CV Metrics
 
 ## Documentation
 https://pandas.pydata.org/docs/reference/frame.html
